@@ -5,8 +5,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Väderapplikation</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="bg-image" style="background-image:url('https://cdn.pixabay.com/photo/2018/08/21/23/29/forest-3622519_1280.jpg')">
     
+    <h1 class="bg-transparent">What's the weather like?</h1>
+    <input type="text" id="city" placeholder="City name">
+    <button class="bg-dark text-light border border-transparent p-2 m-2" onclick="city()">Get Weather</button>
+
+    <script>
+    document.body.setAttribute('class', 'p-5 d-flex flex-column align-items-center')
+    var div = document.createElement('div');
+
+    document.body.appendChild(div);
+    var h2 = document.createElement('h2');
+    var h3 = document.createElement('h3');
+    var small = document.createElement('small');
+
+function skapaDiv (data) {
+    
+    div.setAttribute('class', 'bg-white border border-dark mt-5 p-5 d-flex flex-column justify-content-around align-items-center');
+    div.appendChild(h2);
+    h2.innerHTML = data.name;
+    h3.innerText = Math.floor(data.main.temp);
+    div.appendChild(h3);
+
+    small.innerHTML = ' Lowest possible temperature: '+ Math.floor(data.main.temp_min) + ' <br> ' + 'Highest possible temperature: ' + Math.floor( data.main.temp_max);
+    div.appendChild(small);
+
+}
+
+function city(){
+    const cty = document.getElementById('city').value;
+    fetch('https://api.openweathermap.org/data/2.5/weather?q='+ cty +'&units=metric&appid=87bf7323aa25e76c4284ffff8e1443a1')
+        .then(res => res.json())
+        .then(json =>{
+        console.log(json)
+        console.log("Max" + Math.floor(json.main.temp_max));
+        skapaDiv(json);
+        
+})
+}
+
+
+
+
+//Bootstrap
+
+
+</script>
+
 </body>
 </html>
